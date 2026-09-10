@@ -1,0 +1,17 @@
+// import ballerina/log;
+import ballerina/workflow;
+
+@workflow:Workflow
+function orderWorkflow(workflow:Context ctx, OrderInfo input, OrderWorkflowData data) returns json|error {
+    anydata result = check ctx->callActivity(reserveInventory, {orderInfo: input}, retryPolicy = {maxRetries: 9, retryDelay: 8, retryBackoff: 8, maxRetryDelay: 2});
+    // log:printInfo("Waiting for payment");
+    // [boolean] [payment] = check ctx->await([data.payment], timeout = {
+    //     minutes: 3
+    // });
+    // if payment {
+    //     anydata result = check ctx->callActivity(sendEmail, {orderInfo: input});
+    // } else {
+    //     anydata result = check ctx->callActivity(cancelOrder, {orderInfo: input});
+    // }
+
+}

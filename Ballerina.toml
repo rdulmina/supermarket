@@ -1,0 +1,3 @@
+[workspace]
+title = "Supermarket"
+packages = ["orderprocessor"]
