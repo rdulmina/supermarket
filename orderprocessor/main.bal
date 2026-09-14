@@ -4,7 +4,7 @@ import ballerina/workflow.management.rest as _;
 
 listener http:Listener httpDefaultListener = http:getDefaultListener();
 
-service /'order on httpDefaultListener {
+service /processorder on httpDefaultListener {
     resource function post .(@http:Payload OrderInfo payload) returns json|error {
         do {
             string workflowId = check workflow:run(orderWorkflow, payload);
