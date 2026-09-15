@@ -1,0 +1,125 @@
+openapi: 3.0.1
+info:
+  title: Processorder
+  version: 0.1.0
+servers:
+- url: "http://{server}:{port}/processorder"
+  variables:
+    server:
+      default: localhost
+    port:
+      default: "9090"
+paths:
+  /:
+    post:
+      operationId: post
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/OrderInfo"
+        required: true
+      responses:
+        "201":
+          description: Created
+          content:
+            application/json:
+              schema:
+                type: object
+        "500":
+          description: InternalServerError
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorPayload"
+        "400":
+          description: BadRequest
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorPayload"
+  /{orderId}/payment:
+    post:
+      operationId: postOrderidPayment
+      parameters:
+      - name: orderId
+        in: path
+        required: true
+        schema:
+          type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/PaymentInfo"
+        required: true
+      responses:
+        "201":
+          description: Created
+          content:
+            application/json:
+              schema:
+                type: object
+        "500":
+          description: InternalServerError
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorPayload"
+        "400":
+          description: BadRequest
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorPayload"
+components:
+  schemas:
+    ErrorPayload:
+      required:
+      - message
+      - method
+      - path
+      - reason
+      - status
+      - timestamp
+      type: object
+      properties:
+        timestamp:
+          type: string
+        status:
+          type: integer
+          format: int64
+        reason:
+          type: string
+        message:
+          type: string
+        path:
+          type: string
+        method:
+          type: string
+    OrderInfo:
+      required:
+      - customerEmail
+      - customerId
+      - id
+      - total
+      type: object
+      properties:
+        id:
+          type: string
+        customerId:
+          type: string
+        customerEmail:
+          type: string
+        total:
+          type: integer
+          format: int64
+      additionalProperties: false
+    PaymentInfo:
+      required:
+      - status
+      type: object
+      properties:
+        status:
+          type: string
+      additionalProperties: false

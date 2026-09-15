@@ -1,0 +1,41 @@
+# Choreo / Devant component descriptor for the `orderprocessor` Ballerina package.
+#
+# Endpoint values are taken from the OpenAPI contracts that `bal build --export-openapi`
+# writes to `target/openapi/`. `target/` is gitignored, so the contract is copied next to
+# this file and referenced from here — `schemaFilePath` must resolve inside the cloned
+# repo at build time.
+#
+# Regenerate after changing a service signature:
+#   bal build --export-openapi
+#   cp target/openapi/processorder_openapi.yaml .wso2/processorder_openapi.yaml
+schemaVersion: 1.2
+
+endpoints:
+  # service /processorder on http:getDefaultListener()  (main.bal)
+  # Contract: target/openapi/processorder_openapi.yaml
+  #   servers[0].url -> http://{server}:{port}/processorder, port default 9090
+  - name: processorder
+    displayName: Order Processor API
+    service:
+      basePath: /processorder
+      port: 9090
+    type: REST
+    networkVisibilities:
+      - Public
+    schemaFilePath: .wso2/processorder_openapi.yaml
+
+  # The workflow management REST API (ballerina/workflow.management.rest) is imported in
+  # main.bal but only attaches when `enableManagementApi = true` is set, which this
+  # package's Config.toml does not do. Uncomment this block — and set the configurable in
+  # Choreo — to expose it. Keep it off Public: every scheme it accepts carries a credential.
+  # Contract: target/openapi/workflow_management_openapi.yaml
+  #
+  - name: workflow-management
+    displayName: Workflow Management API
+    service:
+      basePath: /workflow
+      port: 8234
+    type: REST
+    networkVisibilities:
+      - Public
+    schemaFilePath: .wso2/workflow_management_openapi.yaml
