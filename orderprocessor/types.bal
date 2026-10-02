@@ -15,3 +15,11 @@ type OrderWorkflowData record {|
     future<PaymentInfo> paymentInfo;
 |};
 
+type ClaimInfo record {|
+    string filePath;
+|};
+
+type FinanceResponse record {|
+    boolean status;
+    string reason?;
+|};
