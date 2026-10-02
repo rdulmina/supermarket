@@ -15,3 +15,11 @@ function sendConfirmationEmail(OrderInfo orderInfo) {
 function cancelOrder(OrderInfo orderInfo) {
     log:printInfo("Order cancelled");
 }
+
+@workflow:Activity
+function payClaim() {
+}
+
+@workflow:Activity
+function cancleClaim() {
+}
