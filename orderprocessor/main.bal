@@ -1,6 +1,5 @@
 import ballerina/http;
 import ballerina/workflow;
-import ballerina/workflow.management.rest as _;
 
 listener http:Listener httpDefaultListener = http:getDefaultListener();
 
